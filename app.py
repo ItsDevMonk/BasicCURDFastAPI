@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel
 from typing import List, Optional
 
@@ -33,7 +33,9 @@ items = [
 
 
 @app.get("/items", response_model=List[Item])
-def read_items():
+def read_items(request: Request):
+    # print the headers
+    print(request.headers)
     return items
 
 
@@ -87,7 +89,8 @@ users = [
 
 
 @app.get("/users", response_model=List[User])
-def read_users():
+def read_users(request: Request):
+    print(request.headers)
     return users
 
 
