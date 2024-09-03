@@ -90,12 +90,12 @@ users = [
 
 @app.get("/login")
 def login():
-    return {"token": "mysecrettoken"}
+    return {"token": "mysecrettoken123"}
 
 
 def get_current_user(request: Request):
     auth_header = request.headers.get("authToken")
-    if auth_header != "Bearer mysecrettoken":
+    if auth_header != "Bearer mysecrettoken123":
         raise HTTPException(status_code=401, detail="Unauthorized")
     return True
 
