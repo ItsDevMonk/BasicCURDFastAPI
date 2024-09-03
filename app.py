@@ -94,7 +94,7 @@ def login():
 
 
 def get_current_user(request: Request):
-    auth_header = request.headers.get("Authorization")
+    auth_header = request.headers.get("authToken")
     if auth_header != "Bearer mysecrettoken":
         raise HTTPException(status_code=401, detail="Unauthorized")
     return True
