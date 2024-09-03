@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, Depends
 from pydantic import BaseModel
 from typing import List, Optional
 
@@ -88,8 +88,22 @@ users = [
 ]
 
 
+@app.get("/login")
+def login():
+    return {"token": "mysecrettoken"}
+
+
+def get_current_user(request: Request):
+    auth_header = request.headers.get("Authorization")
+    if auth_header != "Bearer mysecrettoken":
+        raise HTTPException(status_code=401, detail="Unauthorized")
+    return True
+
+# add auth
+
+
 @app.get("/users", response_model=List[User])
-def read_users(request: Request):
+def read_users(request: Request, authorized: bool = Depends(get_current_user)):
     print(request.headers)
     return users
 
